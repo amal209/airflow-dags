@@ -1,3 +1,4 @@
+from asyncio import Task
 import datetime
 
 from airflow import DAG
@@ -7,6 +8,38 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 # create_pet_table, populate_pet_table, get_all_pets, and get_birth_date are examples of tasks created by
 # instantiating the Postgres Operator
 
+default_args = {
+    'retries':5
+}
+
+with DAG(
+    'POSTGRES',
+    default_args=default_args,
+    description='A simple tutorial DAG',
+    schedule_interval=timedelta(days=1),
+    start_date=days_ago(2),
+    start_date=pendulum.datetime(2022, 4, 7, tz="UTC"),
+    tags=['example'],
+) as dag:
+    task1 = PostgresOperator(
+         task_id= 'create_postgres_table',
+        postgres_conn_id='postgres_default',
+
+        sql="""
+            CREATE TABLE IF NOT EXISTS pet (
+            pet_id SERIAL PRIMARY KEY,
+            name VARCHAR NOT NULL,
+            pet_type VARCHAR NOT NULL,
+            birth_date DATE NOT NULL,
+            OWNER VARCHAR NOT NULL
+            );
+          """
+       
+)
+
+
+
+'''
 with DAG(
     dag_id="postgres_operator_dag",
     start_date=pendulum.datetime(2022, 4, 7, tz="UTC"),
@@ -46,3 +79,5 @@ with DAG(
     )
 
     create_pet_table >> populate_pet_table >> get_all_pets >> get_birth_date
+
+'''
