@@ -8,7 +8,7 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 with DAG(
     dag_id="postgres_operator_dag",
-    start_date=datetime.datetime(2022, 4, 7),
+    sstart_date=pendulum.datetime(2022, 4, 7, tz="UTC"),
     schedule_interval="@once",
     catchup=False,
 ) as dag:
