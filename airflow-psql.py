@@ -9,7 +9,7 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 # instantiating the Postgres Operator
 
 default_args = {
-    'retries':5
+    'retries':2
 }
 
 with DAG(
@@ -35,6 +35,8 @@ with DAG(
           """
        
 )
+
+task1
 
 
 
