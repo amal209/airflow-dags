@@ -1,57 +1,47 @@
-import airflow
-from datetime import timedelta
+import datetime
+
 from airflow import DAG
-from airflow.operators.postgres_operator import PostgresOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.postgres.operators.postgres import PostgresOperator
 
-args={'owner': 'airflow'}
+# create_pet_table, populate_pet_table, get_all_pets, and get_birth_date are examples of tasks created by
+# instantiating the Postgres Operator
 
-default_args = {
-    'owner': 'airflow',    
-    #'start_date': airflow.utils.dates.days_ago(2),
-    # 'end_date': datetime(),
-    # 'depends_on_past': False,
-    #'email': ['airflow@example.com'],
-    #'email_on_failure': False,
-    # 'email_on_retry': False,
-    # If a task fails, retry it once after waiting
-    # at least 5 minutes
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
-}
-
-dag_psql = DAG(
-    dag_id = "postgresoperator_demo",
-    default_args=args,
-    # schedule_interval='0 0 * * *',
-    schedule_interval='@once',	
-    dagrun_timeout=timedelta(minutes=60),
-    description='use case of psql operator in airflow',
-    start_date = airflow.utils.dates.days_ago(1)
-)
-
-create_table_sql_query = """ 
-CREATE TABLE employee (id INT NOT NULL, name VARCHAR(250) NOT NULL, dept VARCHAR(250) NOT NULL);
-"""
-insert_data_sql_query = """
-insert into employee (id, name, dept) values(1, 'vamshi','bigdata'),(2, 'divya','bigdata'),(3, 'binny','projectmanager'),
-(4, 'omair','projectmanager') ;"""
-
-create_table = PostgresOperator(
-    sql = create_table_sql_query,
-    task_id = "create_table_task",
-    postgres_conn_id = "postgres_local",
-    dag = dag_psql
+with DAG(
+    dag_id="postgres_operator_dag",
+    start_date=datetime.datetime(2022, 4, 7),
+    schedule_interval="@once",
+    catchup=False,
+) as dag:
+    create_pet_table = PostgresOperator(
+        task_id="create_pet_table",
+        sql="""
+            CREATE TABLE IF NOT EXISTS pet (
+            pet_id SERIAL PRIMARY KEY,
+            name VARCHAR NOT NULL,
+            pet_type VARCHAR NOT NULL,
+            birth_date DATE NOT NULL,
+            OWNER VARCHAR NOT NULL);
+          """,
+    )
+    populate_pet_table = PostgresOperator(
+        task_id="populate_pet_table",
+        sql="""
+            INSERT INTO pet (name, pet_type, birth_date, OWNER)
+            VALUES ( 'Max', 'Dog', '2018-07-05', 'Jane');
+            INSERT INTO pet (name, pet_type, birth_date, OWNER)
+            VALUES ( 'Susie', 'Cat', '2019-05-01', 'Phil');
+            INSERT INTO pet (name, pet_type, birth_date, OWNER)
+            VALUES ( 'Lester', 'Hamster', '2020-06-23', 'Lily');
+            INSERT INTO pet (name, pet_type, birth_date, OWNER)
+            VALUES ( 'Quincy', 'Parrot', '2013-08-11', 'Anne');
+            """,
+    )
+    get_all_pets = PostgresOperator(task_id="get_all_pets", sql="SELECT * FROM pet;")
+    get_birth_date = PostgresOperator(
+        task_id="get_birth_date",
+        sql="SELECT * FROM pet WHERE birth_date BETWEEN SYMMETRIC %(begin_date)s AND %(end_date)s",
+        parameters={"begin_date": "2020-01-01", "end_date": "2020-12-31"},
+        runtime_parameters={'statement_timeout': '3000ms'},
     )
 
-insert_data = PostgresOperator(
-    sql = insert_data_sql_query,
-    task_id = "insert_data_task",
-    postgres_conn_id = "postgres_local",
-    dag = dag_psql
-    )
-
-create_table >> insert_data
-
-if __name__ == "__main__":
-    dag_psql.cli()
+    create_pet_table >> populate_pet_table >> get_all_pets >> get_birth_date
