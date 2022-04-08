@@ -13,11 +13,11 @@ default_args = {
 }
 
 with DAG(
-    'POSTGRES',
+    'POSTGRES CONNECTION',
     default_args=default_args,
     description='A simple tutorial DAG',
     #schedule_interval=timedelta(days=1),
-    start_date=pendulum.datetime(2022, 4, 7, tz="UTC"),
+    start_date=pendulum.datetime(2022, 4, 8, tz="UTC"),
     tags=['example'],
 ) as dag:
     task1 = PostgresOperator(
