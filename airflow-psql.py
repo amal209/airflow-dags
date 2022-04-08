@@ -57,5 +57,6 @@ with DAG(
         runtime_parameters={'statement_timeout': '3000ms'},
     )
 
+#Order of tasks
     create_pet_table >> populate_pet_table >> get_all_pets >> get_birth_date
 
