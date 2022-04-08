@@ -13,7 +13,7 @@ default_args = {
 }
 
 with DAG(
-    'POSTGRES CONNECTION',
+    'postgres',
     default_args=default_args,
     description='A simple tutorial DAG',
     #schedule_interval=timedelta(days=1),
