@@ -22,7 +22,7 @@ with DAG(
 ) as dag:
     task1 = PostgresOperator(
         task_id= 'create_postgres_table',
-        postgres_conn_id='airflow-postgresql',
+        postgres_conn_id='airflow_postgres',
         sql="""
             CREATE TABLE IF NOT EXISTS pet (
             pet_id SERIAL PRIMARY KEY,
