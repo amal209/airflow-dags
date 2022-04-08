@@ -12,6 +12,7 @@ default_args = {
     'retries':2
 }
 
+
 with DAG(
     'postgres',
     default_args=default_args,
@@ -20,8 +21,10 @@ with DAG(
     start_date=pendulum.datetime(2022, 4, 8, tz="UTC"),
     tags=['example'],
 ) as dag:
+
     create_pet_table = PostgresOperator(
         task_id="create_pet_table",
+        postgres_conn_id='airflow-postgresql',
         sql="""
             CREATE TABLE IF NOT EXISTS pet (
             pet_id SERIAL PRIMARY KEY,
@@ -33,6 +36,7 @@ with DAG(
     )
     populate_pet_table = PostgresOperator(
         task_id="populate_pet_table",
+        postgres_conn_id='airflow-postgresql',
         sql="""
             INSERT INTO pet (name, pet_type, birth_date, OWNER)
             VALUES ( 'Max', 'Dog', '2018-07-05', 'Jane');
@@ -44,9 +48,10 @@ with DAG(
             VALUES ( 'Quincy', 'Parrot', '2013-08-11', 'Anne');
             """,
     )
-    get_all_pets = PostgresOperator(task_id="get_all_pets", sql="SELECT * FROM pet;")
+    get_all_pets = PostgresOperator(task_id="get_all_pets", postgres_conn_id='airflow-postgresql',sql="SELECT * FROM pet;")
     get_birth_date = PostgresOperator(
         task_id="get_birth_date",
+        postgres_conn_id='airflow-postgresql',
         sql="SELECT * FROM pet WHERE birth_date BETWEEN SYMMETRIC %(begin_date)s AND %(end_date)s",
         parameters={"begin_date": "2020-01-01", "end_date": "2020-12-31"},
         runtime_parameters={'statement_timeout': '3000ms'},
