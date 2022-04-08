@@ -14,7 +14,7 @@ default_args = {
 
 
 with DAG(
-    'postgres: create and insert data',
+    'Connection to Postgresql',
     default_args=default_args,
     description='A simple tutorial DAG',
     #schedule_interval=timedelta(days=1),
