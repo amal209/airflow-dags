@@ -1,12 +1,9 @@
-import yfinance as yf
 from asyncio import Task
-import datetime
 from airflow import DAG
 import pendulum
 from airflow.providers.postgres.operators.postgres import PostgresOperator
+import yfinance 
 
-# create_pet_table, populate_pet_table, get_all_pets, and get_birth_date are examples of tasks created by
-# instantiating the Postgres Operator
 
 default_args = {
     'retries':2
@@ -25,10 +22,9 @@ with DAG(
         dag=dag,
     )
 
-    
 def extractData():
     #calling Yahoo finance API and requesting to get data for the last 22 hours, with an interval of 15 minutes.
-    data = yf.download(tickers='BTC-USD', period = '22h', interval = '15m')
+    data = yfinance.download(tickers='BTC-USD', period = '22h', interval = '15m')
     data
     print('Data extracted')
 
