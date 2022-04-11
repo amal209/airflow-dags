@@ -4,7 +4,7 @@ import pendulum
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 import yfinance 
 
-
+'''
 default_args = {
     'retries':2
 }
@@ -31,12 +31,4 @@ def extractData():
 run_etl
 
 
-
-
-
-
-
-
-#calling Yahoo finance API and requesting to get data for the last 22 hours, with an interval of 15 minutes.
-data = yf.download(tickers='BTC-USD', period = '22h', interval = '15m')
-data
+'''
