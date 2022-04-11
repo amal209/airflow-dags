@@ -1,6 +1,5 @@
 from asyncio import Task
 import datetime
-
 from airflow import DAG
 import pendulum
 from airflow.providers.postgres.operators.postgres import PostgresOperator
