@@ -32,7 +32,6 @@ def extractData():
     data
     print('Data extracted')
 
-
 run_etl
 
 
