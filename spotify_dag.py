@@ -3,12 +3,20 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 from datetime import datetime
-from spotify_etl import spotify_etl_run
+import pandas as pd
+import psycopg2
+from sqlalchemy import create_engine
+import sys
+import requests
+import json
+import datetime
 
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2021,7,17,5,46,0),
+    'start_date': datetime(2022,4,12,5,46,0),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -26,8 +34,14 @@ dag = DAG(
 
 run_etl = PythonOperator(
     task_id='spotify_etl',
-    python_callable=spotify_etl_run,
+    python_callable=hello,
     dag=dag,
 )
+
+def hello():
+    print('Hiiii')
+
+
+
 
 run_etl
