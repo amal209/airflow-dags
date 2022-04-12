@@ -21,6 +21,7 @@ with DAG(
     tags=['example'],
 ) as dag:
 
+    #create table
     create_pet_table = PostgresOperator(
         task_id="create_pet_table",
         postgres_conn_id='airflow-postgresql',
@@ -33,6 +34,8 @@ with DAG(
             OWNER VARCHAR NOT NULL);
           """,
     )
+
+    # add data
     populate_pet_table = PostgresOperator(
         task_id="populate_pet_table",
         postgres_conn_id='airflow-postgresql',
@@ -56,6 +59,6 @@ with DAG(
         runtime_parameters={'statement_timeout': '3000ms'},
     )
 
-#Order of tasks
+#Order of tasks  
     create_pet_table >> populate_pet_table >> get_all_pets >> get_birth_date
 
