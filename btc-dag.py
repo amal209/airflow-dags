@@ -10,11 +10,11 @@ default_args = {
 }
 
 with DAG(
-    'BTC Price',
+    'BTC_Price',
     default_args=default_args,
     description='Getting the BTC price from Yahoo',
     #schedule_interval=timedelta(days=1),
-    start_date=pendulum.datetime(2022, 4, 11, tz="UTC"),
+    start_date=pendulum.datetime(2022, 4, 12, tz="UTC"),
 ) as dag:
     run_etl = PythonOperator(
         task_id='extract_data',
