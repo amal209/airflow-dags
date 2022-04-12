@@ -1,5 +1,6 @@
 from asyncio import Task
 from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
 import pendulum
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 import yfinance 
