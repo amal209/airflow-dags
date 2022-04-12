@@ -12,6 +12,7 @@ import json
 import datetime
 
 import spotipy
+import yfinance
 from spotipy.oauth2 import SpotifyClientCredentials
 default_args = {
     'owner': 'airflow',
