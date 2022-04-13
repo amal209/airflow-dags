@@ -74,7 +74,7 @@ with DAG(
   
 
     
-    t3 = PythonOperator(
+    load_data = PythonOperator(
         task_id='execute_query',
         provide_context=True,
         python_callable=load,
@@ -104,4 +104,4 @@ with DAG(
 
 
 #Order of tasks 
-extract_data >> transform_data >> t3
+extract_data >> transform_data >> load_data
