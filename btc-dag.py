@@ -52,7 +52,8 @@ def run_btc_price_etl():
     host="10.102.86.9",
     database="airflow_db",
     user="postgres",
-    password="abJIbg3d53")
+    password="abJIbg3d53",
+    port="5432")
 
     cursor = conn.cursor()
 
