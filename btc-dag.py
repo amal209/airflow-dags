@@ -16,7 +16,7 @@ default_args = {
     'retries':2
 }
 
-def extractData(ti):
+def extract(ti):
     table="btc_price"
     #calling Yahoo finance API and requesting to get data for the last 22 hours, with an interval of 15 minutes.
     data = yfinance.download(tickers='BTC-USD', period = '22h', interval = '15m')
@@ -25,7 +25,7 @@ def extractData(ti):
     #print(data)
     data.to_csv("/tmp/data.csv", index=False)
 
-def load():
+def transform():
 
     # read csv
     data = pd.read_csv("/tmp/data.csv")
@@ -44,14 +44,14 @@ with DAG(
     # task1 ==> extract data
     extract_data = PythonOperator(
         task_id='extract_data',
-        python_callable=extractData,
+        python_callable=extract,
         dag=dag,
     )
 
-    # task2 ==> load data
-    load_data = PythonOperator(
-        task_id='load_data',
-        python_callable=load,
+    # task2 ==> transform data
+    transform_data = PythonOperator(
+        task_id='transform_data',
+        python_callable=transform,
         dag=dag,
     )
 
@@ -77,4 +77,4 @@ with DAG(
 
 
 #Order of tasks 
-extract_data >> load_data
+extract_data >> transform_data
