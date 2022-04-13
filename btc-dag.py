@@ -47,8 +47,7 @@ def load():#(query):
     conn = postgres.get_conn() 
     cursor = conn.cursor()
     #sql=""" CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL,Close FLOAT NOT NULL);"""
-    cursor.execute("CREATE TABLE {} (c VARCHAR)".format(table))
-
+    cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
     conn.commit()
 
 
@@ -79,7 +78,7 @@ with DAG(
     )
   
 
-    '''
+    
     load_data = PythonOperator(
         task_id='execute_query',
         provide_context=True,
@@ -105,9 +104,9 @@ with DAG(
             Close FLOAT NOT NULL);
           """,
         dag=dag,
-    )
+    )'''
 
 
 
 #Order of tasks 
-extract_data >> transform_data >> create_table
+extract_data >> transform_data >> load_data
