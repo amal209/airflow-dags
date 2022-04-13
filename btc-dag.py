@@ -54,7 +54,7 @@ def execute_query_with_conn_obj():#(query):
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL
     );
-    """,
+    """
     print("QQQQQ",sql_query)
     cur.execute(sql_query)
 
@@ -82,6 +82,22 @@ with DAG(
         dag=dag,
     )
 
+    #create table
+    create_table = PostgresOperator(
+        task_id="create_table",
+        postgres_conn_id='airflow-postgresql',
+        sql="""
+            CREATE TABLE IF NOT EXISTS pet (
+            pet_id SERIAL PRIMARY KEY,
+            name VARCHAR NOT NULL,
+            pet_type VARCHAR NOT NULL,
+            birth_date DATE NOT NULL,
+            OWNER VARCHAR NOT NULL);
+          """,
+        dag=dag
+    )
+
+'''
     t3 = PythonOperator(
         task_id='execute_query',
         provide_context=True,
@@ -90,18 +106,9 @@ with DAG(
         dag=dag)
 '''
     
-    # task3 ===>  create table and load df to table
-    load_data = PostgresOperator(
-        task_id="load_data_to_postgres",
-        postgres_conn_id='airflow-postgresql',
-        
-        
-    )
-'''
-
 
 
 
 
 #Order of tasks 
-extract_data >> transform_data >> t3
+extract_data >> transform_data >> create_table
