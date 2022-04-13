@@ -53,7 +53,7 @@ def execute_query_with_conn_obj():#(query):
             High FLOAT NOT NULL,
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL
-    )
+    );
     """ 
     print("QQQQQ",sql_query)
     cur.execute(sql_query)
