@@ -22,6 +22,7 @@ def extractData():
     data = yfinance.download(tickers='BTC-USD', period = '22h', interval = '15m')
     data
     print('Data extracted')
+    print(data)
 
 with DAG(
     'BTC_Price',
@@ -31,6 +32,7 @@ with DAG(
     start_date=pendulum.datetime(2022, 4, 13, tz="UTC"),
 ) as dag:
     # task1 ==> extract data
+
     extract_data = PythonOperator(
         task_id='extract_data',
         python_callable=extractData,
