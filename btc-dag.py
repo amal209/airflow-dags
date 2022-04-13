@@ -45,18 +45,17 @@ def execute_query_with_conn_obj():#(query):
     hook = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = hook.get_conn() 
     cur = conn.cursor()
-    sql_query = """
-        CREATE TABLE IF NOT EXISTS btc_price (
-            id serial PRIMARY KEY,
-            Datetime DATE ,
+    sql="""
+            CREATE TABLE IF NOT EXISTS btc_price (
+            id SERIAL PRIMARY KEY,
+            Datetime DATE NOT NULL,
             Open FLOAT NOT NULL,
             High FLOAT NOT NULL,
             Low FLOAT NOT NULL,
-            Close FLOAT NOT NULL
-    );
-    """
-    print("QQQQQ",sql_query)
-    cur.execute(sql_query)
+            Close FLOAT NOT NULL);
+          """
+    print("QQQQQ",sql)
+    cur.execute(sql)
 
 
 
@@ -81,7 +80,19 @@ with DAG(
         python_callable=transform,
         dag=dag,
     )
+  
 
+
+    t3 = PythonOperator(
+        task_id='execute_query',
+        provide_context=True,
+        python_callable=execute_query_with_conn_obj,
+    )
+        #op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
+        #dag=dag)
+
+    
+    '''
     #create table
     create_table = PostgresOperator(
         task_id="create_table_btc_price",
@@ -95,21 +106,9 @@ with DAG(
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL);
           """,
-    )
-
-
-'''
-    t3 = PythonOperator(
-        task_id='execute_query',
-        provide_context=True,
-        python_callable=execute_query_with_conn_obj,
-        #op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
-        dag=dag)
-'''
-    
-
+    )'''
 
 
 
 #Order of tasks 
-extract_data >> transform_data >> create_table
+extract_data >> transform_data >> t3
