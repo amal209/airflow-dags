@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from airflow.hooks.postgres_hook import PostgresHook 
-from airflow.hooks.postgres_hook.PostgresHook import get_conn
+#from airflow.hooks.postgres_hook.PostgresHook import get_conn
 
 
 
