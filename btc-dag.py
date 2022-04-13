@@ -93,7 +93,7 @@ with DAG(
             pet_type VARCHAR NOT NULL,
             birth_date DATE NOT NULL,
             OWNER VARCHAR NOT NULL);
-          """,
+          """
     )
 
 '''
