@@ -46,7 +46,7 @@ def execute_query_with_conn_obj():#(query):
     conn = hook.get_conn() 
     cur = conn.cursor()
     sql_query = """
-        CREATE TABLE IF NOT EXISTS btc_prices (
+        CREATE TABLE IF NOT EXISTS btc_price (
             Datetime DATE PRIMARY KEY,
             Open FLOAT NOT NULL,
             High FLOAT NOT NULL,
@@ -54,6 +54,7 @@ def execute_query_with_conn_obj():#(query):
             Close FLOAT NOT NULL
     )
     """ 
+    print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     cur.execute(sql_query)
 
 
