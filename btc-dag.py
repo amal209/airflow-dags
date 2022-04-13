@@ -54,12 +54,10 @@ def execute_query_with_conn_obj():#(query):
             Close FLOAT NOT NULL
     )
     """ 
+    print("QQQQQ",sql_query)
     cur.execute(sql_query)
-    print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 
 
-
-    
 
 with DAG(
     'BTC_Price',
