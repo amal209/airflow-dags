@@ -10,6 +10,9 @@ import yfinance
 import numpy as np
 import pandas as pd
 
+from airflow.hooks.postgres_hook import PostgresHook 
+
+
 
 
 default_args = {
@@ -17,7 +20,7 @@ default_args = {
 }
 
 # extract data
-def extract(ti):
+def extract():
     table="btc_price"
     #calling Yahoo finance API and requesting to get data for the last 22 hours, with an interval of 15 minutes.
     data = yfinance.download(tickers='BTC-USD', period = '22h', interval = '15m')
@@ -38,17 +41,12 @@ def transform():
     price_df.to_csv("/tmp/price_df.csv", index=True)
 
 #load data
-def load():
-    price_df = pd.read_csv("/tmp/price_df.csv"),
-    sql="""
-            CREATE TABLE IF NOT EXISTS btc_price (
-            id SERIAL PRIMARY KEY,
-            Datetime DATE NOT NULL,
-            Open FLOAT NOT NULL,
-            High FLOAT NOT NULL,
-            Low FLOAT NOT NULL,
-            Close FLOAT NOT NULL);
-          """,
+def execute_query_with_conn_obj(query): 
+    hook = PostgresHook(postgres_conn_id='airflow-postgresql') 
+    conn = hook.get_conn() 
+    cur = conn.cursor() 
+    cur.execute(query)
+
 
 
     
@@ -74,6 +72,13 @@ with DAG(
         python_callable=transform,
         dag=dag,
     )
+
+    t3 = PythonOperator(
+        task_id='execute query',
+        provide_context=True,
+        python_callable=execute_query_with_conn_obj,
+        op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
+        dag=dag)
 '''
     
     # task3 ===>  create table and load df to table
@@ -90,4 +95,4 @@ with DAG(
 
 
 #Order of tasks 
-extract_data >> transform_data 
+extract_data >> transform_data >> t3
