@@ -94,7 +94,6 @@ with DAG(
             birth_date DATE NOT NULL,
             OWNER VARCHAR NOT NULL);
           """,
-        dag=dag
     )
 
 '''
