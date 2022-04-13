@@ -53,8 +53,8 @@ def execute_query_with_conn_obj():#(query):
             High FLOAT NOT NULL,
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL);
-          """
-    print("QQQQQ",sql)
+          """,
+    dag=dag,
     cur.execute(sql)
 
 
@@ -82,7 +82,7 @@ with DAG(
     )
   
 
-    '''
+    
     t3 = PythonOperator(
         task_id='execute_query',
         provide_context=True,
@@ -108,9 +108,9 @@ with DAG(
             Close FLOAT NOT NULL);
           """,
         dag=dag,
-    )
+    )'''
 
 
 
 #Order of tasks 
-extract_data >> transform_data >> create_table
+extract_data >> transform_data >> t3
