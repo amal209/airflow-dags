@@ -23,7 +23,7 @@ def extract(ti):
     data
     print('Data extracted')
     #print(data)
-    data.to_csv("/tmp/data.csv", index=False)
+    data.to_csv("/tmp/data.csv", index=True)
 
 def transform():
     # read csv
