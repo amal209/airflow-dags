@@ -62,8 +62,9 @@ with DAG(
     
     # task3 ===>  create table and load df to table
     load_data = PostgresOperator(
-        task_id="create_table_btc_price",
+        task_id="load_data_to_postgres",
         postgres_conn_id='airflow-postgresql',
+        price_df = pd.read_csv("/tmp/price_df.csv"),
         sql="""
             CREATE TABLE IF NOT EXISTS btc_price (
             id SERIAL PRIMARY KEY,
