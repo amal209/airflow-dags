@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from airflow.hooks.postgres_hook import PostgresHook 
+from airflow.hooks.postgres_hook.PostgresHook import get_conn
 
 
 
@@ -42,11 +43,16 @@ def transform():
 
 #load data
 def load():#(query): 
-    hook = PostgresHook(postgres_conn_id='airflow-postgresql') 
-    conn = hook.get_conn() 
-    cur = conn.cursor()
-    sql=""" CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL,Close FLOAT NOT NULL);"""
-    cur.execute(sql)
+    postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
+    conn = postgres.get_conn() 
+    cursor = conn.cursor()
+    #sql=""" CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL,Close FLOAT NOT NULL);"""
+    cursor.execute("CREATE TABLE {} (c VARCHAR)".format(table))
+
+    conn.commit()
+
+
+
 
 
 
