@@ -50,10 +50,10 @@ def run_btc_price_etl():
     #engine = sqlalchemy.create_engine(DATABASE_LOCATION)
     conn = psycopg2.connect(
     host="10.102.86.9",
+    port="5432",
     database="airflow_db",
     user="postgres",
-    password="abJIbg3d53",
-    port="5432")
+    password="abJIbg3d53")
 
     cursor = conn.cursor()
 
