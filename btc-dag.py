@@ -16,13 +16,14 @@ default_args = {
     'retries':2
 }
 
-def extractData():
+def extractData(ti):
     table="btc_price"
     #calling Yahoo finance API and requesting to get data for the last 22 hours, with an interval of 15 minutes.
     data = yfinance.download(tickers='BTC-USD', period = '22h', interval = '15m')
     data
     print('Data extracted')
     print(data)
+    ti.xcom_push(key='my_data', value=data)
 
 with DAG(
     'BTC_Price',
