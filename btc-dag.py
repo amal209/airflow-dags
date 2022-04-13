@@ -29,8 +29,11 @@ def transform():
     # read csv
     data = pd.read_csv("/tmp/data.csv")
     print("reading csv",data)
+
+    # keep only 5 columns
     price_df = pd.DataFrame(data , columns = ["Datetime" , "Open", "High", "Low" , "Close"])
     print("PRICE DATAFRAME : ",price_df)
+    price_df.to_csv("/tmp/price_df.csv", index=True)
 
     
 
@@ -56,9 +59,9 @@ with DAG(
         dag=dag,
     )
 
-    '''
-    # task2 ===>  create table
-    create_table = PostgresOperator(
+    
+    # task3 ===>  create table and load df to table
+    load_data = PostgresOperator(
         task_id="create_table_btc_price",
         postgres_conn_id='airflow-postgresql',
         sql="""
@@ -70,7 +73,7 @@ with DAG(
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL);
           """,
-    )'''
+    )
 
 
 
@@ -78,4 +81,4 @@ with DAG(
 
 
 #Order of tasks 
-extract_data >> transform_data
+extract_data >> transform_data >> load_data
