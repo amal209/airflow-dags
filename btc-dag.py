@@ -47,7 +47,8 @@ def execute_query_with_conn_obj():#(query):
     cur = conn.cursor()
     sql_query = """
         CREATE TABLE IF NOT EXISTS btc_price (
-            Datetime DATE PRIMARY KEY,
+            id serial PRIMARY KEY,
+            Datetime DATE ,
             Open FLOAT NOT NULL,
             High FLOAT NOT NULL,
             Low FLOAT NOT NULL,
