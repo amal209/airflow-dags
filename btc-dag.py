@@ -84,17 +84,19 @@ with DAG(
 
     #create table
     create_table = PostgresOperator(
-        task_id="create_table",
+        task_id="create_table_btc_price",
         postgres_conn_id='airflow-postgresql',
         sql="""
-            CREATE TABLE IF NOT EXISTS pet (
-            pet_id SERIAL PRIMARY KEY,
-            name VARCHAR NOT NULL,
-            pet_type VARCHAR NOT NULL,
-            birth_date DATE NOT NULL,
-            OWNER VARCHAR NOT NULL);
-          """
+            CREATE TABLE IF NOT EXISTS btc_price (
+            id SERIAL PRIMARY KEY,
+            Datetime DATE NOT NULL,
+            Open FLOAT NOT NULL,
+            High FLOAT NOT NULL,
+            Low FLOAT NOT NULL,
+            Close FLOAT NOT NULL);
+          """,
     )
+
 
 '''
     t3 = PythonOperator(
