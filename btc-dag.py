@@ -23,7 +23,7 @@ def extractData(ti):
     data
     print('Data extracted')
     print(data)
-    ti.xcom_push(key='my_data', value=data)
+    data.to_csv("/tmp/data.csv", index=False)
 
 with DAG(
     'BTC_Price',
