@@ -57,7 +57,7 @@ def load():#(query):
 
 
 with DAG(
-    'BTC_Price',
+    'BTC_Prices',
     default_args=default_args,
     description='Getting the BTC price from Yahoo',
     #schedule_interval=timedelta(days=1),
