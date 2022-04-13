@@ -37,10 +37,10 @@ with DAG(
     description='Getting the BTC price from Yahoo',
     #schedule_interval=timedelta(days=1),
     start_date=pendulum.datetime(2022, 4, 12, tz="UTC"),
-    postgres_conn_id='airflow-postgresql'
 ) as dag:
     # task1 ===>  Extract data
     extract_data = PythonOperator(
+        postgres_conn_id='airflow-postgresql'
         task_id='extract_data',
         python_callable=extractData,
         dag=dag,
