@@ -82,7 +82,7 @@ with DAG(
     )
   
 
-
+    '''
     t3 = PythonOperator(
         task_id='execute_query',
         provide_context=True,
@@ -107,9 +107,9 @@ with DAG(
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL);
           """,
-    )'''
+    )
 
 
 
 #Order of tasks 
-extract_data >> transform_data >> t3
+extract_data >> transform_data >> create_table
