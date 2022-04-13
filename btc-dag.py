@@ -74,7 +74,7 @@ with DAG(
     )
 
     t3 = PythonOperator(
-        task_id='execute query',
+        task_id='execute_query',
         provide_context=True,
         python_callable=execute_query_with_conn_obj,
         op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
