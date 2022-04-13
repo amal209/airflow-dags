@@ -49,11 +49,14 @@ def run_btc_price_etl():
 
     #engine = sqlalchemy.create_engine(DATABASE_LOCATION)
     conn = psycopg2.connect(
-    host="10.102.86.9",
-    port="5432",
-    database="airflow_db",
-    user="postgres",
-    password="abJIbg3d53")
+        database="airflow_db", 
+        user='postgres', 
+        password='abJIbg3d53', 
+        host='10.102.86.9',
+        port='5432',
+    )
+        
+    
 
     cursor = conn.cursor()
 
@@ -69,7 +72,7 @@ def run_btc_price_etl():
 
     cursor.execute(sql_query)
     print("Opened database successfully")
-
+'''
     try:
         price_df.to_sql("btc_prices", conn , if_exists='append')
     except:
@@ -77,7 +80,7 @@ def run_btc_price_etl():
 
     conn.close()
     print("Close database successfully")
-
+'''
 with DAG(
     'BTC_Price',
     default_args=default_args,
@@ -87,7 +90,7 @@ with DAG(
 ) as dag:
     # task
     run_etl = PythonOperator(
-        task_id='extract_data',
+        task_id='btc_etl',
         #postgres_conn_id='airflow-postgresql',
         python_callable=run_btc_price_etl,
         dag=dag,
