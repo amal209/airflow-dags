@@ -41,7 +41,7 @@ def transform():
     price_df.to_csv("/tmp/price_df.csv", index=True)
 
 #load data
-def execute_query_with_conn_obj():#(query): 
+def load():#(query): 
     hook = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = hook.get_conn() 
     cur = conn.cursor()
@@ -77,7 +77,7 @@ with DAG(
     t3 = PythonOperator(
         task_id='execute_query',
         provide_context=True,
-        python_callable=execute_query_with_conn_obj,
+        python_callable=load,
         dag=dag,
     )
         #op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
