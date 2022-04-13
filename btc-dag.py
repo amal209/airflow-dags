@@ -40,7 +40,7 @@ with DAG(
 ) as dag:
     # task1 ===>  Extract data
     extract_data = PythonOperator(
-        postgres_conn_id='airflow-postgresql'
+        postgres_conn_id='airflow-postgresql',
         task_id='extract_data',
         python_callable=extractData,
         dag=dag,
