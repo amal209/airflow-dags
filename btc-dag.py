@@ -47,7 +47,7 @@ def load():#(query):
     conn = postgres.get_conn() 
     cursor = conn.cursor()
     #sql=""" CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL,Close FLOAT NOT NULL);"""
-    cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
+    cursor.execute("CREATE TABLE IF NOT EXISTS test (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
     conn.commit()
 
 
@@ -89,22 +89,7 @@ with DAG(
         #dag=dag)
 
     
-    '''
-    #create table
-    create_table = PostgresOperator(
-        task_id="create_table_btc_price",
-        postgres_conn_id='airflow-postgresql',
-        sql="""
-            CREATE TABLE IF NOT EXISTS btc_price (
-            id SERIAL PRIMARY KEY,
-            Datetime DATE NOT NULL,
-            Open FLOAT NOT NULL,
-            High FLOAT NOT NULL,
-            Low FLOAT NOT NULL,
-            Close FLOAT NOT NULL);
-          """,
-        dag=dag,
-    )'''
+   
 
 
 
