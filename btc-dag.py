@@ -26,10 +26,11 @@ def extract(ti):
     data.to_csv("/tmp/data.csv", index=False)
 
 def transform():
-
     # read csv
     data = pd.read_csv("/tmp/data.csv")
-    print("reading csv",data)
+    #print("reading csv",data)
+    price_df = pd.DataFrame(data , columns = ["Open", "High", "Low" , "Close"])
+    print("PRICE DATAFRAME : ",price_df)
 
     
 
