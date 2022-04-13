@@ -62,7 +62,7 @@ def run_btc_price_etl():
             Open FLOAT NOT NULL,
             High FLOAT NOT NULL,
             Low FLOAT NOT NULL,
-            Close FLOAT NOT NULL);
+            Close FLOAT NOT NULL
     )
     """
 
