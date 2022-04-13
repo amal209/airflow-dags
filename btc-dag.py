@@ -54,8 +54,8 @@ def execute_query_with_conn_obj():#(query):
             Close FLOAT NOT NULL
     )
     """ 
-    print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     cur.execute(sql_query)
+    print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 
 
 
