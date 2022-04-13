@@ -57,7 +57,7 @@ def run_btc_price_etl():
     cursor = conn.cursor()
 
     sql_query = """
-        CREATE TABLE IF NOT EXISTS btc_price (
+        CREATE TABLE IF NOT EXISTS btc_prices (
             Datetime DATE PRIMARY KEY,
             Open FLOAT NOT NULL,
             High FLOAT NOT NULL,
@@ -70,7 +70,7 @@ def run_btc_price_etl():
     print("Opened database successfully")
 
     try:
-        price_df.to_sql("btc_price", conn , if_exists='append')
+        price_df.to_sql("btc_prices", conn , if_exists='append')
     except:
         print("Data already exists in the database")
 
