@@ -61,7 +61,7 @@ def load(table_name, **kwargs):
     cursor = conn.cursor()
 
 
-    conn.bulk_load(table_name, "/tmp/price_df.csv")
+    
     
     #cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE UNIQUE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
     conn.commit()
