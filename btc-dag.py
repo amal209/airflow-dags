@@ -41,8 +41,8 @@ def transform():
     print("PRICE DATAFRAME : ",price_df)
     price_df.to_csv("/tmp/price_df.csv", index=True)
 
-#load data
-def load():#(query): 
+# create table
+def create_table():#(query): 
     postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = postgres.get_conn() 
     cursor = conn.cursor()
@@ -50,6 +50,22 @@ def load():#(query):
     cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE UNIQUE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
     conn.commit()
 
+# load data
+def load(table_name, **kwargs):
+    #get data
+    price_df = pd.read_csv("/tmp/price_df.csv")
+  
+    # parametrs of the connection
+    postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
+    conn = postgres.get_conn() 
+    cursor = conn.cursor()
+
+
+    conn.bulk_load(table_name, "/tmp/price_df.csv")
+    
+    #cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE UNIQUE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
+    conn.commit()
+    return table_name
 
 
 
@@ -78,11 +94,12 @@ with DAG(
     )
   
 
-    
+    # task ==> load data
     load_data = PythonOperator(
-        task_id='execute_query',
+        task_id='load_data',
         provide_context=True,
         python_callable=load,
+        op_kwargs={'table_name': 'btc_prices'},
         dag=dag,
     )
         #op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
