@@ -22,8 +22,16 @@ def extractData(ti):
     data = yfinance.download(tickers='BTC-USD', period = '22h', interval = '15m')
     data
     print('Data extracted')
-    print(data)
+    #print(data)
     data.to_csv("/tmp/data.csv", index=False)
+
+def load():
+
+    # read csv
+    data = pd.read_csv("/tmp/data.csv")
+    print("reading csv",data)
+
+    
 
 with DAG(
     'BTC_Price',
@@ -32,11 +40,18 @@ with DAG(
     #schedule_interval=timedelta(days=1),
     start_date=pendulum.datetime(2022, 4, 13, tz="UTC"),
 ) as dag:
-    # task1 ==> extract data
 
+    # task1 ==> extract data
     extract_data = PythonOperator(
         task_id='extract_data',
         python_callable=extractData,
+        dag=dag,
+    )
+
+    # task2 ==> load data
+    load_data = PythonOperator(
+        task_id='load_data',
+        python_callable=load,
         dag=dag,
     )
 
@@ -62,4 +77,4 @@ with DAG(
 
 
 #Order of tasks 
-extract_data
+extract_data >> load_data
