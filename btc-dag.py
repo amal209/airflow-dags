@@ -107,6 +107,7 @@ with DAG(
             Low FLOAT NOT NULL,
             Close FLOAT NOT NULL);
           """,
+        dag=dag,
     )
 
 
