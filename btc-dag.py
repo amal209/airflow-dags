@@ -65,7 +65,7 @@ def load():
 
 
     engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
-    price_df.to_sql('test', engine)
+    price_df.to_sql('maTable', engine)
 
 
 
