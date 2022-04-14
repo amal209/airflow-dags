@@ -68,7 +68,7 @@ def load():
 
 
     
-    engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
+    engine = create_engine('postgresql://user:password@localhost:5432/db')
     #engine = create_engine(postgres_conn_id='airflow-postgresql')
     price_df.to_sql('btc_price', engine)
 
