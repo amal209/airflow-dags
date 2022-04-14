@@ -12,6 +12,8 @@ import pandas as pd
 
 from airflow.hooks.postgres_hook import PostgresHook 
 #from airflow.hooks.postgres_hook.PostgresHook import get_conn
+import sql  # the patched version (file is named sql.py)
+
 
 
 
@@ -54,18 +56,18 @@ def create_table():#(query):
 def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")
-    price_df.to_csv("/tmp/price_df.csv", index=True)
-
-
+    
     # parametrs of the connection
     postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = postgres.get_conn() 
     cursor = conn.cursor()
 
-    cursor.execute("COPY btc_price(datetime, open,high,low,close) FROM '/tmp/price_df.csv' DELIMITER ','CSV HEADER;")
+    sql.write_frame(price_df, 'btc_price', conn, flavor='postgresql')
+
+    #cursor.execute("COPY btc_price(datetime, open,high,low,close) FROM '/tmp/price_df.csv' DELIMITER ','CSV HEADER;")
 
     
-    #cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE UNIQUE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
+   
     conn.commit()
 
 
