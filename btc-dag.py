@@ -12,7 +12,7 @@ import pandas as pd
 
 from airflow.hooks.postgres_hook import PostgresHook 
 #from airflow.hooks.postgres_hook.PostgresHook import get_conn
-import sql  # the patched version (file is named sql.py)
+#import sql  # the patched version (file is named sql.py)
 
 
 
