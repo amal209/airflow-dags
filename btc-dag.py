@@ -41,7 +41,7 @@ def transform():
     print("PRICE DATAFRAME : ",price_df)
     price_df.to_csv("/tmp/price_df.csv", index=True)
 
-# create table
+# create table 
 def create_table():#(query): 
     postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = postgres.get_conn() 
@@ -54,11 +54,12 @@ def create_table():#(query):
 def load(table_name, **kwargs):
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")
-  
     # parametrs of the connection
     postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = postgres.get_conn() 
     cursor = conn.cursor()
+
+    print("PPPPPPPP",price_df)
 
 
     
@@ -102,9 +103,7 @@ with DAG(
         op_kwargs={'table_name': 'btc_prices'},
         dag=dag,
     )
-        #op_kwargs={'query': 'CREATE TABLE IF NOT EXISTS btc_prices (Datetime DATE PRIMARY KEY, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL)'},
-        #dag=dag)
-
+       
     
    
 
