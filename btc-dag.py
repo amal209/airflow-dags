@@ -54,6 +54,9 @@ def create_table():#(query):
 def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")
+    price_df.to_csv("/tmp/price_df.csv", index=True)
+
+
     # parametrs of the connection
     postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
     conn = postgres.get_conn() 
