@@ -51,7 +51,7 @@ def create_table():#(query):
     conn.commit()
 
 # load data
-def load(table_name, **kwargs):
+def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")
     # parametrs of the connection
@@ -59,14 +59,12 @@ def load(table_name, **kwargs):
     conn = postgres.get_conn() 
     cursor = conn.cursor()
 
-    print("PPPPPPPP",price_df)
+    cursor.execute("COPY btc_price(datetime,employee_name, open,high,low,close) FROM '/tmp/price_df.csv' DELIMITER ','CSV HEADER;")
 
-
-    
     
     #cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE UNIQUE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
     conn.commit()
-    return table_name
+
 
 
 
@@ -95,12 +93,11 @@ with DAG(
     )
   
 
-    # task ==> load data
+    # task3 ==> load data
     load_data = PythonOperator(
         task_id='load_data',
         provide_context=True,
         python_callable=load,
-        op_kwargs={'table_name': 'btc_prices'},
         dag=dag,
     )
        
