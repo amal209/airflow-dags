@@ -57,6 +57,9 @@ def create_table():#(query):
 def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")
+
+    #Delete firt column 
+    price_df = pd.DataFrame(price_df , columns = ["Datetime" , "Open", "High", "Low" , "Close"])
     
     # parametrs of the connection
     #postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
@@ -64,7 +67,9 @@ def load():
     #cursor = conn.cursor()#
 
 
-    engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
+    
+    #engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
+    engine = create_engine(postgres_conn_id='airflow-postgresql')
     price_df.to_sql('btc_price', engine)
 
 
