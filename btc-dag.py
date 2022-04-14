@@ -13,6 +13,7 @@ import pandas as pd
 from airflow.hooks.postgres_hook import PostgresHook 
 #from airflow.hooks.postgres_hook.PostgresHook import get_conn
 #import sql  # the patched version (file is named sql.py)
+from sqlalchemy import create_engine
 
 
 
@@ -58,17 +59,23 @@ def load():
     price_df = pd.read_csv("/tmp/price_df.csv")
     
     # parametrs of the connection
-    postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
-    conn = postgres.get_conn() 
-    cursor = conn.cursor()
+    #postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
+    #conn = postgres.get_conn() 
+    #cursor = conn.cursor()#
 
-    price_df.to_sql('btc_price', con=conn, if_exists='replace',index=False)
 
+    engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
+    price_df.to_sql('btc_price', engine)
+
+
+
+
+    #price_df.to_sql('btc_price', con=conn, if_exists='replace',index=False)
     #cursor.execute("COPY btc_price(datetime, open,high,low,close) FROM '/tmp/price_df.csv' DELIMITER ','CSV HEADER;")
 
     
    
-    conn.commit()
+    #conn.commit()
 
 
 
