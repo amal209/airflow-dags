@@ -62,7 +62,7 @@ def load():
     conn = postgres.get_conn() 
     cursor = conn.cursor()
 
-    sql.write_frame(price_df, 'btc_price', conn, flavor='postgresql')
+    df.to_sql('btc_price', con=conn, if_exists='replace',index=False)
 
     #cursor.execute("COPY btc_price(datetime, open,high,low,close) FROM '/tmp/price_df.csv' DELIMITER ','CSV HEADER;")
 
