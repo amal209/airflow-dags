@@ -50,7 +50,8 @@ def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")    
     # load to postgres
-    engine = create_engine('postgresql://user:password@1host:5432/db')
+    #engine = create_engine('postgresql://user:password@1host:5432/db')
+    engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
     price_df.to_sql('btc_price', engine)
 
 with DAG(
