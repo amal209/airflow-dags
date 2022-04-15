@@ -20,7 +20,7 @@ from sqlalchemy import create_engine
 
 
 default_args = {
-    'retries':1
+    'retries':2
 }
 
 # extract data
