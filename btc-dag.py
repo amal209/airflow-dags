@@ -42,50 +42,16 @@ def transform():
     # keep only 5 columns
     price_df = pd.DataFrame(data , columns = ["Datetime" , "Open", "High", "Low" , "Close"])
     print("PRICE DATAFRAME : ",price_df)
-    price_df.to_csv("/tmp/price_df.csv", index=True)
+    price_df.to_csv("/tmp/price_df.csv", index=False)
 
-# create table 
-def create_table():#(query): 
-    postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
-    conn = postgres.get_conn() 
-    cursor = conn.cursor()
-    #sql=""" CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL,Close FLOAT NOT NULL);"""
-    cursor.execute("CREATE TABLE IF NOT EXISTS btc_price (id SERIAL PRIMARY KEY, Datetime DATE UNIQUE NOT NULL, Open FLOAT NOT NULL, High FLOAT NOT NULL, Low FLOAT NOT NULL, Close FLOAT NOT NULL);")
-    conn.commit()
 
 # load data
 def load():
     #get data
-    price_df = pd.read_csv("/tmp/price_df.csv")
-
-    #Delete firt column 
-    price_df = pd.DataFrame(price_df , columns = ["Datetime" , "Open", "High", "Low" , "Close"])
-    
-    # parametrs of the connection
-    #postgres = PostgresHook(postgres_conn_id='airflow-postgresql') 
-    #conn = postgres.get_conn() 
-    #cursor = conn.cursor()#
-
-
-    
-    engine = create_engine('postgresql://user:password@localhost:5432/db')
-    #engine = create_engine(postgres_conn_id='airflow-postgresql')
+    price_df = pd.read_csv("/tmp/price_df.csv")    
+    # load to postgres
+    engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
     price_df.to_sql('btc_price', engine)
-
-
-
-
-    #price_df.to_sql('btc_price', con=conn, if_exists='replace',index=False)
-    #cursor.execute("COPY btc_price(datetime, open,high,low,close) FROM '/tmp/price_df.csv' DELIMITER ','CSV HEADER;")
-
-    
-   
-    #conn.commit()
-
-
-
-
-
 
 with DAG(
     'BTC_Prices',
@@ -120,8 +86,5 @@ with DAG(
        
     
    
-
-
-
 #Order of tasks 
 extract_data >> transform_data >> load_data
