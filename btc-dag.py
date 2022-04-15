@@ -40,7 +40,7 @@ def transform():
     print("reading csv",data)
 
     # keep only 5 columns
-    price_df = pd.DataFrame(data , columns = ["Datetime" , "Open", "High", "Low" , "Close"])
+    price_df = pd.DataFrame(data , columns = ["datetime" , "open", "high", "low" , "close"])
     print("PRICE DATAFRAME : ",price_df)
     price_df.to_csv("/tmp/price_df.csv", index=False)
 
