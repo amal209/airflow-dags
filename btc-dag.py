@@ -40,7 +40,9 @@ def transform():
     print("reading csv",data)
 
     # keep only 5 columns
-    price_df = pd.DataFrame(data , columns = ["datetime" , "open", "high", "low" , "close"])
+    price_df = pd.DataFrame(data , columns = ["Datetime" , "Open", "High", "Low" , "Close"])
+    #rename df columns ( so we can easly access to them using grafana)
+    price_df.rename(columns = {'Datetime':'datetime', 'Open':'open', 'High':'high', 'Low':'low', 'Close':'close'}, inplace = True)
     print("PRICE DATAFRAME : ",price_df)
     price_df.to_csv("/tmp/price_df.csv", index=False)
 
