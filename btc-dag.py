@@ -59,7 +59,7 @@ with DAG(
     default_args=default_args,
     description='Getting the BTC price from Yahoo',
     #schedule_interval=timedelta(days=1),
-    start_date=pendulum.datetime(2022, 4, 14, tz="UTC"),
+    start_date=pendulum.datetime(2022, 4, 15, tz="UTC"),
 ) as dag:
 
     # task1 ==> extract data
