@@ -62,8 +62,8 @@ with DAG(
     #schedule_interval=timedelta(days=1),
     start_date=pendulum.datetime(2022, 4, 29, tz="UTC"),
 ) as dag:
-
-    # task1 ==> extract data
+ 
+    # task1 ==> extract dataa
     extract_data = PythonOperator(
         task_id='extract_data',
         python_callable=extract,
