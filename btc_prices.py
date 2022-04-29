@@ -56,7 +56,7 @@ def load():
     price_df.to_sql('btc_price', engine)
 
 with DAG(
-    'BTC_Prices_DAG',
+    'BTC_Prices_ETL',
     default_args=default_args,
     description='Getting the BTC price from Yahoo',
     #schedule_interval=timedelta(days=1),
