@@ -52,7 +52,7 @@ def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")    
     # load to postgres
-    engine = create_engine('postgresql://postgres:echoabJIbg3d53@10.102.86.9:5432/airflow_db')
+    engine = create_engine('postgresql://user:password@host:5432/db')
     price_df.to_sql('btc_price', engine)
 
 with DAG(
@@ -63,7 +63,7 @@ with DAG(
     start_date=pendulum.datetime(2022, 4, 29, tz="UTC"),
 ) as dag:
  
-    # task1 ==> extract dataa
+    # task1 ==> extract data
     extract_data = PythonOperator(
         task_id='extract_data',
         python_callable=extract,
