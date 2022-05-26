@@ -26,7 +26,7 @@ with DAG(
     # [END default_args]
     description='ETL DAG tutorial',
     schedule_interval=None,
-    start_date=pendulum.datetime(2022, 4, 7, tz="UTC"),
+    start_date=pendulum.datetime(2022, 5, 26, tz="UTC"),
     catchup=False,
     tags=['example'],
 ) as dag:

@@ -16,9 +16,6 @@ from airflow.hooks.postgres_hook import PostgresHook
 from sqlalchemy import create_engine
 
 
-
-
-
 default_args = {
     'retries':2
 }
