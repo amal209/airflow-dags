@@ -49,7 +49,8 @@ def load():
     #get data
     price_df = pd.read_csv("/tmp/price_df.csv")    
     # load to postgres
-    engine = create_engine('postgresql://postgresuser:password@host/db')
+    #engine = create_engine('postgresql://postgresuser:password@host/db')
+    engine = create_engine('postgresql://postgres:abJIbg3d53@10.102.86.9:5432/airflow_db')
     price_df.to_sql('btc_price', engine)
 
 with DAG(
@@ -57,7 +58,7 @@ with DAG(
     default_args=default_args,
     description='Getting the BTC price from Yahoo',
     #schedule_interval=timedelta(days=1),
-    start_date=pendulum.datetime(2022, 5, 26, tz="UTC"),
+    start_date=pendulum.datetime(2022, 5, 30, tz="UTC"),
 ) as dag:
  
     # task1 ==> extract data
