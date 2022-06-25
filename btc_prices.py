@@ -56,7 +56,7 @@ with DAG(
     'BTC_Prices_ETL',
     default_args=default_args,
     description='Getting the BTC price from Yahoo',
-    schedule_interval=@daily,
+    schedule_interval='@daily',
     start_date=pendulum.datetime(2022, 5, 30, tz="UTC"),
 ) as dag:
  
