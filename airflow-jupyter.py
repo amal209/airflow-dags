@@ -17,7 +17,7 @@ with DAG(
     dag_id='example_papermill_operator',
     default_args=default_args,
     schedule_interval='0 0 * * *',
-    start_date=datetime(2022, 8, 9),
+    start_date=datetime(2022, 8, 11),
     #template_searchpath='/usr/local/airflow/include',
     template_searchpath='/opt/bitnami/scripts/',
     catchup=False
