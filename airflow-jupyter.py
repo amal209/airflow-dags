@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.papermill.operators.papermill import PapermillOperator
 
+
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -18,12 +19,13 @@ with DAG(
     schedule_interval='0 0 * * *',
     start_date=datetime(2022, 8, 9),
     #template_searchpath='/usr/local/airflow/include',
+    template_searchpath='/opt/bitnami/scripts/',
     catchup=False
 ) as dag_1:
 
     notebook_task = PapermillOperator(
         task_id="run_example_notebook",
-        input_nb="include/example_notebook.ipynb",
-        output_nb="include/out-{{ execution_date }}.ipynb",
+        input_nb="scripts/test.ipynb",
+        output_nb="scripts/out-{{ execution_date }}.ipynb",
         parameters={"execution_date": "{{ execution_date }}"},
     )
