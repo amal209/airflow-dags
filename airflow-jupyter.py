@@ -25,7 +25,7 @@ with DAG(
 
     notebook_task = PapermillOperator(
         task_id="run_example_notebook",
-        input_nb="scripts/test.ipynb",
-        output_nb="scripts/out-{{ execution_date }}.ipynb",
+        input_nb="test.ipynb",
+        output_nb="out-{{ execution_date }}.ipynb",
         parameters={"execution_date": "{{ execution_date }}"},
     )
