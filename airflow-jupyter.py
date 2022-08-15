@@ -17,15 +17,15 @@ with DAG(
     dag_id='example_papermill_operator',
     default_args=default_args,
     schedule_interval='0 0 * * *',
-    start_date=datetime(2022, 8, 11),
+    start_date=datetime(2022, 8, 15),
     #template_searchpath='/usr/local/airflow/include',
-    template_searchpath='/test',
+    #template_searchpath='/dags_airflow-dags',
     catchup=False
 ) as dag_1:
 
     notebook_task = PapermillOperator(
         task_id="run_example_notebook",
-        input_nb="test/test.ipynb",
-        output_nb="test/out-{{ execution_date }}.ipynb",
+        input_nb="/dags_airflow-dags/test.ipynb",
+        output_nb="/dags_airflow-dags/out-{{ execution_date }}.ipynb",
         parameters={"execution_date": "{{ execution_date }}"},
     )
