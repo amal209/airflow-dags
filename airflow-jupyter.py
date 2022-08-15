@@ -25,4 +25,4 @@ with DAG(
     )
 
 #order 
-run_example_notebook
+notebook_task
