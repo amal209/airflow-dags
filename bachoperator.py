@@ -8,7 +8,7 @@ default_args = {
     'retries': 10,
 	  'retry_delay': timedelta(hours=1)
 }
-with airflow.DAG('bash operator ',
+with airflow.DAG('bash_operator ',
                   default_args=default_args,
                   schedule_interval='0 1 * * *') as dag:
     task_elt_documento_pagar = BashOperator(
