@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-
+import pendulum
 from airflow import DAG
 from airflow.providers.papermill.operators.papermill import PapermillOperator
 
@@ -13,7 +13,7 @@ default_args = {
 with DAG(
     dag_id='example2_papermill_operator',
     default_args=default_args,
-    start_date=datetime(2022, 8, 23),
+    start_date=pendulum.datetime(2022, 8, 23, tz="UTC"),
     template_searchpath='/opt/scripts',
     #template_searchpath='/dags_airflow-dags',
 ) as dag:
