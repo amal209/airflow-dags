@@ -20,7 +20,7 @@ with DAG(
     dag_id='example_bach_operator',
     default_args=default_args,
     start_date=datetime(2022, 8, 23),
-    schedule_interval='@daily',
+    #schedule_interval='@daily',
 ) as dag:
     t2 = BashOperator(task_id='test_bash_operator',bash_command=command, dag=dag)
 
