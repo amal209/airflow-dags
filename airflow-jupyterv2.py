@@ -11,7 +11,7 @@ spark_master = ("spark://spark-master-0.spark-headless.spark.svc.cluster.local:7
 command = ("spark-submit "
            "--master {master} "
            #"--py-files package1.zip "
-           "/tmp/test.ipynb"
+           "/tmp/test.py"
            ).format(master=spark_master)
 
 #dag = DAG(............,schedule_interval='@daily')#
