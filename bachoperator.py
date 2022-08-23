@@ -4,7 +4,7 @@ from airflow.operators.bash_operator import BashOperator
 
 default_args = {
     'owner': 'jozimar',
-    'start_date': datetime(2020, 11, 18),
+    'start_date': datetime(2022, 8, 23),
     'retries': 10,
 	  'retry_delay': timedelta(hours=1)
 }
