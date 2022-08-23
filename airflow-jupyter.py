@@ -11,16 +11,16 @@ default_args = {
 
 
 with DAG(
-    dag_id='example_papermill_operator',
+    dag_id='example2_papermill_operator',
     default_args=default_args,
-    start_date=datetime(2022, 8, 15),
-    #template_searchpath='/usr/local/airflow/include',
+    start_date=datetime(2022, 8, 23),
+    template_searchpath='/opt/scripts',
     #template_searchpath='/dags_airflow-dags',
 ) as dag:
     notebook_task = PapermillOperator(
         task_id="run_example_notebook",
-        input_nb="/dags_airflow-dags/test.ipynb",
-        output_nb="/dags_airflow-dags/out-{{ execution_date }}.ipynb",
+        input_nb="notebook.ipynb",
+        output_nb="/opt/scripts/out-{{ execution_date }}.ipynb",
         parameters={"execution_date": "{{ execution_date }}"},
     )
 
