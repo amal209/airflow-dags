@@ -24,8 +24,11 @@ with DAG(
     #schedule_interval='@daily',
 ) as dag:
     #t2 = BashOperator(task_id='test_bash_operator',bash_command=command, dag=dag)
-    task = SSHOperator(task_id='ssh_spark_submit',dag=dag,command=command,ssh_conn_id='spark_master_ssh'
-)
+    task = SSHOperator(task_id='ssh_spark_submit',
+        dag=dag,
+        command=command,
+        ssh_conn_id='spark_master_ssh',
+    )
 
 task
     
