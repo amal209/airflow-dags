@@ -14,6 +14,7 @@ with DAG(
     dag_id='example2_papermill_operator',
     default_args=default_args,
     start_date=pendulum.datetime(2022, 8, 23, tz="UTC"),
+    schedule_interval=None,
     template_searchpath='/opt/scripts',
     #template_searchpath='/dags_airflow-dags',
 ) as dag:
