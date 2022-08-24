@@ -7,7 +7,9 @@ from airflow.contrib.operators.ssh_operator import SSHOperator
 default_args = {
     'retries':2
 }
-spark_master = ("spark://spark-master-0.spark-headless.spark.svc.cluster.local:7077")
+spark_master = ("spark://"
+"spark-master-svc"
+":7077")
 
 command = ("spark-submit "
            "--master {master} "
@@ -24,10 +26,10 @@ with DAG(
     #schedule_interval='@daily',
 ) as dag:
     #t2 = BashOperator(task_id='test_bash_operator',bash_command=command, dag=dag)
-    task = SSHOperator(task_id='ssh_spark_submit',
+    task =  BashOperator(task_id='ssh_spark_submit',
         dag=dag,
-        command=command,
-        ssh_conn_id='spark_master_ssh',
+        bash_command=command,
+        #ssh_conn_id='spark_master_ssh',
     )
 
 task
