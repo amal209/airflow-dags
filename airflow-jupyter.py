@@ -11,7 +11,7 @@ default_args = {
 
 
 with DAG(
-    dag_id='example2_papermill_operator',
+    dag_id='papermill_operator',
     default_args=default_args,
     start_date=pendulum.datetime(2022, 8, 23, tz="UTC"),
     schedule_interval=None,
