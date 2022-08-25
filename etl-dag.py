@@ -19,9 +19,6 @@ from airflow.operators.python import PythonOperator
 # [START instantiate_dag]
 with DAG(
     'tutorial_etl_dag',
-    # [START default_args]
-    # These args will get passed on to each operator
-    # You can override them on a per-task basis during operator initialization
     default_args={'retries': 2},
     # [END default_args]
     description='ETL DAG tutorial',

@@ -7,9 +7,6 @@ from airflow.providers.papermill.operators.papermill import PapermillOperator
 default_args = {
     'retries':2
 }
-
-
-
 with DAG(
     dag_id='papermill_operator',
     default_args=default_args,
