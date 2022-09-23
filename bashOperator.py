@@ -11,7 +11,7 @@ default_args = {
 spark_master = ("spark://""spark-master-svc"":7077")
 command = ("spark-submit"
             "--master {master} "
-            "/path/to/app.py").format(master=spark_master)
+            "/tmp/test.py").format(master=spark_master)
 
 with DAG(
     dag_id='bash_operator',
