@@ -9,7 +9,7 @@ default_args = {
     'retries':2
 }
 spark_master = ("spark://""spark-master-svc"":7077")
-command = ("spark-submit"
+command = ("spark-submit "
             "--master {master} "
             "/tmp/test.py").format(master=spark_master)
 
