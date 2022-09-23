@@ -14,7 +14,7 @@ command = ("spark-submit"
             "/path/to/app.py").format(master=spark_master)
 
 with DAG(
-    dag_id='spark_submit_operator',
+    dag_id='bash_operator',
     default_args=default_args,
     start_date=datetime(2022, 9, 23),
 ) as dag:
